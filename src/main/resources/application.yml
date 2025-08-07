@@ -1,0 +1,24 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: festival
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: create   #초기 개발에는 create로 하시죠
+    show-sql: true       #쿼리출력하려고
+    properties:
+      hibernate:
+        format_sql: true
+
+
+logging:
+  level:
+    org.springframework: INFO
