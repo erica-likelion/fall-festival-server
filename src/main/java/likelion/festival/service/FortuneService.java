@@ -43,7 +43,8 @@ public class FortuneService {
     //랜덤 매핑
     private FortuneResponseDto matchTodayFortune(String pk){
         Random random = new Random();
-        Long randomFortuneId = random.nextLong(1, 41);
+        //운세 갯수에 따라서 설정 바꿔야함. 테스트로 5개 넣어두겠음
+        Long randomFortuneId = random.nextLong(1, 7);
         Fortune picked = fortuneRepository.findFortuneById(randomFortuneId);
 
         try{
