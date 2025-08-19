@@ -3,30 +3,48 @@ package likelion.festival.controller;
 import likelion.festival.dto.FortuneRequestDto;
 import likelion.festival.dto.FortuneResponseDto;
 import likelion.festival.service.FortuneService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.CacheControl;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.Clock;
+import java.time.Duration;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.concurrent.TimeUnit;
+
+
 @RestController
 @RequestMapping("api/fortunes")
+@RequiredArgsConstructor
 public class FortuneController {
 
     private final FortuneService fortuneService;
+    private static final ZoneId KST = ZoneId.of("Asia/Seoul");
+    private final Clock clock;
 
-    public FortuneController(FortuneService fortuneService) {
-        this.fortuneService = fortuneService;
+    @PostMapping(consumes = "application/json", produces = "application/json")
+    public ResponseEntity<FortuneResponseDto> getTodayFortune(@RequestBody FortuneRequestDto request){
+        FortuneResponseDto response = fortuneService.getTodayFortune(request);
+
+        // 00시까지 캐시
+        int seconds = secondsUntilMidnightKST();
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CACHE_CONTROL,
+                        CacheControl.maxAge(seconds, TimeUnit.SECONDS)
+                                .cachePrivate().getHeaderValue())
+                .body(response);
     }
 
-    @PostMapping("/")
-    public ResponseEntity<FortuneResponseDto> create(@RequestBody FortuneRequestDto req){
-        if(req == null || req.getName() == null || req.getName().isBlank()
-                || req.getBirth() == null || req.getBirth().isBlank()){
-            return ResponseEntity.badRequest().build();
-        }
-        //하루 기준으로 동일이름+동일생년월일 요청은 같은 PK -> 같은 운세로 반환
-        FortuneResponseDto res = fortuneService.getOrCreate(req.getName(), req.getBirth());
-        return ResponseEntity.ok(res);
+    private int secondsUntilMidnightKST() {
+        //ZonedDateTime now = ZonedDateTime.now(KST);
+        ZonedDateTime now = ZonedDateTime.now(clock.withZone(KST));//테스트용
+        ZonedDateTime midnight = now.toLocalDate().plusDays(1).atStartOfDay(KST);
+        return (int) Duration.between(now, midnight).getSeconds();
     }
 }
