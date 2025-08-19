@@ -1,82 +1,119 @@
 package likelion.festival.service;
 
 import likelion.festival.domain.Fortune;
-import likelion.festival.domain.UserFortune;
+import likelion.festival.domain.UserDailyFortune;
+import likelion.festival.dto.FortuneRequestDto;
 import likelion.festival.dto.FortuneResponseDto;
 import likelion.festival.repository.FortuneRepository;
-import likelion.festival.repository.UserFortuneRepository;
+import likelion.festival.repository.UserDailyFortuneRepository;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Clock;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Random;
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class FortuneService {
 
-    private static final ZoneId KST = ZoneId.of("Asia/Seoul");
-
     private final FortuneRepository fortuneRepository;
-    private final UserFortuneRepository userFortuneRepository;
+    private final UserDailyFortuneRepository userDailyFortuneRepository;
+    //테스트 할때 시간조작하려고 하는거
+    private final Clock clock;  // <<-- 추가
 
-    public FortuneService(FortuneRepository fortuneRepository, UserFortuneRepository userFortuneRepository) {
-        this.fortuneRepository = fortuneRepository;
-        this.userFortuneRepository = userFortuneRepository;
-    }
+    private static final int FESTIVAL_DAY = 3; //축제 3일간
+    private static final ZoneId KST = ZoneId.of("Asia/Seoul"); //기준 한국시간으로
 
-    /**
-     * 요청 받아서 오늘 운세를 반환(오늘 거 있으면 있는 거 반환, 없으면 생성)
-     */
     @Transactional
-    public FortuneResponseDto getOrCreate(String name, String birth){
-        //pk: 이름+생년월일+day(2자리)
-        LocalDate now = LocalDate.now(KST);
-        String pk = createdFortuneId(name, birth, now.getDayOfMonth());
+    public FortuneResponseDto getTodayFortune(FortuneRequestDto req){
+        String name = normalizeName(req.getName()); //이름 받은 거 데이터 처리(ex: 공백 등)
+        String birth = requireBirth(req.getBirth());//20250820 형식
+        String userKey = name + birth;
 
-        return userFortuneRepository.findById(pk)
-                .map(uf -> toResponse(uf.getFortune()))
-                .orElseGet(() -> matchTodayFortune(pk));
-    }
+        /**
+         * 로컬 서버에서 테스트할 때(clock) today
+         * 실제 LocalDate today
+         */
+        //LocalDate today = LocalDate.now(KST);
+        LocalDate today = LocalDate.now(clock.withZone(KST));
 
-    //랜덤 매핑
-    private FortuneResponseDto matchTodayFortune(String pk){
-        Random random = new Random();
-        //운세 갯수에 따라서 설정 바꿔야함. 테스트로 5개 넣어두겠음
-        Long randomFortuneId = random.nextLong(1, 7);
-        Fortune picked = fortuneRepository.findFortuneById(randomFortuneId);
-
-        try{
-            UserFortune uf = new UserFortune();
-            uf.setId(pk);
-            uf.setFortune(picked);
-            userFortuneRepository.saveAndFlush(uf);
-            return toResponse(picked);
-        }catch (DataIntegrityViolationException dup){
-            //이미 누군가 같은 PK로 저장했다면 -> 그 값 응답
-            return userFortuneRepository.findById(pk)
-                    .map(uf -> toResponse(uf.getFortune()))
-                    .orElseThrow(() -> dup);
+        //요청 받은 날(오늘) 매핑 체크
+        Optional<UserDailyFortune> existing = userDailyFortuneRepository.findByUserKeyAndFortuneDate(userKey, today);
+        if(existing.isPresent()){
+            return fortuneResponse(existing.get().getFortune());//운세 조회 했으면 그대로 반환
         }
+        //없으면 운세 아이디 체크해서 매핑 안했던 거로 골라줘야함
+        LocalDate start = today.minusDays(FESTIVAL_DAY-1);
+        List<Long> useFortunes = userDailyFortuneRepository.findUsedFortuneIdsInRange(userKey, start, today);
+
+        //전체 운세에서 위에 사용했던 운세 빼
+        List<Fortune> fortunes  = fortuneRepository.findAll();
+        List<Fortune> filteredFortunes = fortunes.stream()
+                .filter(f -> !useFortunes.contains(f.getId()))
+                .collect(Collectors.toList());
+
+        Fortune pick = pickRandomFortune(filteredFortunes);
+
+        //유니크 조건 예외
+        try{
+            UserDailyFortune userDailyFortune = new UserDailyFortune();
+            userDailyFortune.setUserKey(userKey);
+            userDailyFortune.setFortuneDate(today);
+            userDailyFortune.setFortune(pick);
+            /**
+             * 테스트할 때 clock 사용
+             */
+            userDailyFortune.setAssignedAt(LocalDateTime.now(clock.withZone(KST)));//테스트
+            //userDailyFortune.setAssignedAt(LocalDateTime.now(KST));//실제
+
+            userDailyFortuneRepository.saveAndFlush(userDailyFortune);
+        }catch (DataIntegrityViolationException race){
+            //동시성 대비. 동시 요청이 겹쳤을 때 -> 재조회 해서 동일한 결과 반환하게
+        }
+
+        UserDailyFortune saved = userDailyFortuneRepository
+                .findByUserKeyAndFortuneDate(userKey, today)
+                .orElseThrow();
+
+        return fortuneResponse(saved.getFortune());
     }
 
-    //ID 생성 이름+생년월일+day
-    public String createdFortuneId(String name, String birth, int day){
-        //ex: 2002-02-01 -> 20020201
-        String cleanBirth = birth.replaceAll("-", "");
-        //ex: 9일 들어오면 -> 09일로
-        String dayToStr = String.format("%02d", day);
-        return name+cleanBirth+dayToStr;
+    private String normalizeName(String name) {
+        if(name == null) throw new IllegalArgumentException("이름 필수");
+        String trimmed = name.trim().replaceAll("\\s+", " ");
+        return java.text.Normalizer.normalize(trimmed, java.text.Normalizer.Form.NFKC);
     }
 
-    private FortuneResponseDto toResponse(Fortune f){
+    private static Fortune pickRandomFortune(List<Fortune> list) {
+        if (list == null || list.isEmpty()) {
+            throw new IllegalStateException("등록된 운세 이미지가 없습니다.");
+        }
+        int idx = ThreadLocalRandom.current().nextInt(list.size());
+        return list.get(idx);
+    }
+
+    private static String requireBirth(String birth) {
+        if (birth == null || !birth.matches("\\d{8}")) {
+            // 필요하면 6자리(yyMMdd) 허용으로 변경 가능:  birth.matches("\\d{6}|\\d{8}")
+            throw new IllegalArgumentException("birth는 yyyyMMdd 형식이어야 합니다.");
+        }
+        return birth;
+    }
+
+    private static FortuneResponseDto fortuneResponse(Fortune fortune){
         FortuneResponseDto dto = new FortuneResponseDto();
-        dto.setMessage(f.getMessage());
-        dto.setColor(f.getColor());
-        dto.setScore(f.getScore());
-        dto.setImage_url(f.getImageUrl());
+        dto.setImageUrl(fortune.getImageUrl());
         return dto;
     }
+
 
 }
