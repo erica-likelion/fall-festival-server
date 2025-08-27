@@ -6,8 +6,6 @@ import likelion.festival.dto.FortuneRequestDto;
 import likelion.festival.dto.FortuneResponseDto;
 import likelion.festival.repository.FortuneRepository;
 import likelion.festival.repository.UserDailyFortuneRepository;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,13 +20,18 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class FortuneService {
 
     private final FortuneRepository fortuneRepository;
     private final UserDailyFortuneRepository userDailyFortuneRepository;
     //테스트 할때 시간조작하려고 하는거
-    private final Clock clock;  // <<-- 추가
+    private final Clock clock;//실제 서버는 주석처리
+
+    public FortuneService(FortuneRepository fortuneRepository, UserDailyFortuneRepository userDailyFortuneRepository, Clock clock) {
+        this.fortuneRepository = fortuneRepository;
+        this.userDailyFortuneRepository = userDailyFortuneRepository;
+        this.clock = clock;
+    }
 
     private static final int FESTIVAL_DAY = 3; //축제 3일간
     private static final ZoneId KST = ZoneId.of("Asia/Seoul"); //기준 한국시간으로
@@ -43,8 +46,8 @@ public class FortuneService {
          * 로컬 서버에서 테스트할 때(clock) today
          * 실제 LocalDate today
          */
-        //LocalDate today = LocalDate.now(KST);
-        LocalDate today = LocalDate.now(clock.withZone(KST));
+        //LocalDate today = LocalDate.now(KST);//실제
+        LocalDate today = LocalDate.now(clock.withZone(KST));//로컬환경 테스트
 
         //요청 받은 날(오늘) 매핑 체크
         Optional<UserDailyFortune> existing = userDailyFortuneRepository.findByUserKeyAndFortuneDate(userKey, today);

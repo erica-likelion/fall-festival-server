@@ -3,7 +3,6 @@ package likelion.festival.controller;
 import likelion.festival.dto.FortuneRequestDto;
 import likelion.festival.dto.FortuneResponseDto;
 import likelion.festival.service.FortuneService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +20,16 @@ import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("api/fortunes")
-@RequiredArgsConstructor
 public class FortuneController {
 
     private final FortuneService fortuneService;
     private static final ZoneId KST = ZoneId.of("Asia/Seoul");
     private final Clock clock;
+
+    public FortuneController(FortuneService fortuneService, Clock clock) {
+        this.fortuneService = fortuneService;
+        this.clock = clock;
+    }
 
     @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<FortuneResponseDto> getTodayFortune(@RequestBody FortuneRequestDto request){
