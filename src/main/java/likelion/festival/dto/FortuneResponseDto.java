@@ -1,4 +1,4 @@
-package likelion.festival.fortune.dto;
+package likelion.festival.dto;
 
 
 public class FortuneResponseDto {

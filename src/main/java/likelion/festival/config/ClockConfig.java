@@ -1,4 +1,4 @@
-package likelion.festival.fortune.config;
+package likelion.festival.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

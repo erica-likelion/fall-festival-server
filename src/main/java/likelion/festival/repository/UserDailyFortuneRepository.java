@@ -1,6 +1,6 @@
-package likelion.festival.fortune.repository;
+package likelion.festival.repository;
 
-import likelion.festival.fortune.domain.UserDailyFortune;
+import likelion.festival.domain.UserDailyFortune;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
