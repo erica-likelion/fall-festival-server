@@ -18,6 +18,7 @@ import java.util.List;
 public class NoticeService {
     private final NoticeRepository noticeRepository;
 
+    // 공지사항 전체 불러오기
     public List<NoticeDto> getAll() {
         List<Notice> notices = noticeRepository.findAll();
 
@@ -28,6 +29,14 @@ public class NoticeService {
         return notices.stream()
                 .map(NoticeDto::from)
                 .toList();
+    }
+
+    // 공지사항 한개 불러오기
+    public NoticeDto getById(Long id) {
+        Notice notice = noticeRepository.findById(id)
+                .orElseThrow(() -> new ApiException(ErrorCode.NOTICE_NOT_FOUND, "id = " + id));
+
+        return NoticeDto.from(notice);
     }
 
 }
