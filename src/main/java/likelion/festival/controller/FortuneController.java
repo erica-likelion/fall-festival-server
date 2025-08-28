@@ -2,6 +2,7 @@ package likelion.festival.controller;
 
 import likelion.festival.dto.FortuneRequestDto;
 import likelion.festival.dto.FortuneResponseDto;
+import likelion.festival.exception.ApiSuccess;
 import likelion.festival.service.FortuneService;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
@@ -32,16 +33,17 @@ public class FortuneController {
     }
 
     @PostMapping(consumes = "application/json", produces = "application/json")
-    public ResponseEntity<FortuneResponseDto> getTodayFortune(@RequestBody FortuneRequestDto request){
+    public ResponseEntity<ApiSuccess<FortuneResponseDto>> getTodayFortune(@RequestBody FortuneRequestDto request){
         FortuneResponseDto response = fortuneService.getTodayFortune(request);
 
         // 00시까지 캐시
         int seconds = secondsUntilMidnightKST();
+        ApiSuccess<FortuneResponseDto> body = ApiSuccess.of(response, "운세 조회 완료");
         return ResponseEntity.ok()
                 .header(HttpHeaders.CACHE_CONTROL,
                         CacheControl.maxAge(seconds, TimeUnit.SECONDS)
                                 .cachePrivate().getHeaderValue())
-                .body(response);
+                .body(body);
     }
 
     private int secondsUntilMidnightKST() {
