@@ -1,9 +1,9 @@
 package likelion.festival.fortune;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import likelion.festival.domain.Fortune;
-import likelion.festival.dto.FortuneResponseDto;
-import likelion.festival.repository.FortuneRepository;
+import likelion.festival.fortune.domain.Fortune;
+import likelion.festival.fortune.dto.FortuneResponseDto;
+import likelion.festival.fortune.repository.FortuneRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

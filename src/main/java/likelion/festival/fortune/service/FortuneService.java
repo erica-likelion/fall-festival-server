@@ -1,11 +1,11 @@
-package likelion.festival.service;
+package likelion.festival.fortune.service;
 
-import likelion.festival.domain.Fortune;
-import likelion.festival.domain.UserDailyFortune;
-import likelion.festival.dto.FortuneRequestDto;
-import likelion.festival.dto.FortuneResponseDto;
-import likelion.festival.repository.FortuneRepository;
-import likelion.festival.repository.UserDailyFortuneRepository;
+import likelion.festival.fortune.domain.Fortune;
+import likelion.festival.fortune.domain.UserDailyFortune;
+import likelion.festival.fortune.dto.FortuneRequestDto;
+import likelion.festival.fortune.dto.FortuneResponseDto;
+import likelion.festival.fortune.repository.FortuneRepository;
+import likelion.festival.fortune.repository.UserDailyFortuneRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

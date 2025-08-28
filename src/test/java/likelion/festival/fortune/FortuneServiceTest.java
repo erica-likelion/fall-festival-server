@@ -1,13 +1,13 @@
 
 package likelion.festival.fortune;
 
-import likelion.festival.domain.Fortune;
-import likelion.festival.domain.UserDailyFortune;
-import likelion.festival.dto.FortuneRequestDto;
-import likelion.festival.dto.FortuneResponseDto;
-import likelion.festival.repository.FortuneRepository;
-import likelion.festival.repository.UserDailyFortuneRepository;
-import likelion.festival.service.FortuneService;
+import likelion.festival.fortune.domain.Fortune;
+import likelion.festival.fortune.domain.UserDailyFortune;
+import likelion.festival.fortune.dto.FortuneRequestDto;
+import likelion.festival.fortune.dto.FortuneResponseDto;
+import likelion.festival.fortune.repository.FortuneRepository;
+import likelion.festival.fortune.repository.UserDailyFortuneRepository;
+import likelion.festival.fortune.service.FortuneService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,6 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;

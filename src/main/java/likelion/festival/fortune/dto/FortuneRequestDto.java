@@ -1,4 +1,4 @@
-package likelion.festival.dto;
+package likelion.festival.fortune.dto;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package likelion.festival.domain;
+package likelion.festival.fortune.domain;
 
 import jakarta.persistence.*;
 

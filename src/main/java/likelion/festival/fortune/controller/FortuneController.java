@@ -1,8 +1,8 @@
-package likelion.festival.controller;
+package likelion.festival.fortune.controller;
 
-import likelion.festival.dto.FortuneRequestDto;
-import likelion.festival.dto.FortuneResponseDto;
-import likelion.festival.service.FortuneService;
+import likelion.festival.fortune.dto.FortuneRequestDto;
+import likelion.festival.fortune.dto.FortuneResponseDto;
+import likelion.festival.fortune.service.FortuneService;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
