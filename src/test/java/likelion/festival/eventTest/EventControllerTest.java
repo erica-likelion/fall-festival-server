@@ -1,4 +1,4 @@
-package likelion.festival.event;
+package likelion.festival.eventTest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import likelion.festival.event.controller.EventController;
@@ -44,7 +44,7 @@ class EventControllerTest {
                 .startTime(LocalDateTime.now().minusHours(1))
                 .endTime(LocalDateTime.now().plusHours(1))
                 .place("주막거리")
-                .link("http://instagram.com/event1")
+                .period("9/13~9/14")
                 .build();
 
         List<EventResponse> events = List.of(event1);
