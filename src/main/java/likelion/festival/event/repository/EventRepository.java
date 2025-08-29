@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long> {
 
-    @Query("SELECT e FROM Event e WHERE :now BETWEEN e.startTime AND e.endTime")
+    @Query("SELECT e FROM Event e WHERE :now BETWEEN e.startTime AND e.endTime ORDER BY e.startTime DESC, e.endTime ASC")
     List<Event> findActiveEvents(@Param("now") LocalDateTime now);
 
 }

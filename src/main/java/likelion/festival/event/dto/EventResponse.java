@@ -15,7 +15,7 @@ public class EventResponse {
     private final LocalDateTime startTime;
     private final LocalDateTime endTime;
     private final String place;
-    private final String link;
+    private final String period;
 
     public static EventResponse from(Event event) {
         return EventResponse.builder()
@@ -24,7 +24,7 @@ public class EventResponse {
                 .startTime(event.getStartTime())
                 .endTime(event.getEndTime())
                 .place(event.getPlace())
-                .link(event.getLink())
+                .period(event.getPeriod())
                 .build();
     }
 }
