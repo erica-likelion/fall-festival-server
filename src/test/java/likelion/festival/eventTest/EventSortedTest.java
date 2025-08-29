@@ -90,6 +90,7 @@ class EventSortedTest {
                 .title(title)
                 .startTime(startTime)
                 .endTime(endTime)
+                .notice(null)
                 .build();
         entityManager.persist(event);
     }
