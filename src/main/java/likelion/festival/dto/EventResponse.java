@@ -1,6 +1,6 @@
-package likelion.festival.event.dto;
+package likelion.festival.dto;
 
-import likelion.festival.event.domain.Event;
+import likelion.festival.domain.Event;
 import lombok.Builder;
 import lombok.Getter;
 

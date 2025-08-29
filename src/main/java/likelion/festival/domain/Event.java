@@ -1,4 +1,4 @@
-package likelion.festival.event.domain;
+package likelion.festival.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

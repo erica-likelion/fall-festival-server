@@ -1,7 +1,7 @@
-package likelion.festival.event.controller;
+package likelion.festival.controller;
 
-import likelion.festival.event.dto.EventResponse;
-import likelion.festival.event.service.EventService;
+import likelion.festival.dto.EventResponse;
+import likelion.festival.service.EventService;
 import likelion.festival.exception.ApiException;
 import likelion.festival.exception.ApiSuccess;
 import likelion.festival.exception.ErrorCode;
