@@ -24,6 +24,6 @@ public class NoticeController {
     public ApiSuccess<NoticeDto> getNotice(@PathVariable Long id) {
         NoticeDto noticeDto = noticeService.getById(id);
 
-        return new ApiSuccess<>(noticeDto, "공지 상세 조회 성공");
+        return new ApiSuccess<>(noticeDto, "공지 상세 조회 완료");
     }
 }
