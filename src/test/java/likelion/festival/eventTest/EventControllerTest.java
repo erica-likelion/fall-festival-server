@@ -1,9 +1,9 @@
 package likelion.festival.eventTest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import likelion.festival.event.controller.EventController;
-import likelion.festival.event.dto.EventResponse;
-import likelion.festival.event.service.EventService;
+import likelion.festival.controller.EventController;
+import likelion.festival.dto.EventResponse;
+import likelion.festival.service.EventService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

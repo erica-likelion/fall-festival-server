@@ -1,7 +1,7 @@
 package likelion.festival.eventTest;
 
-import likelion.festival.event.domain.Event;
-import likelion.festival.event.repository.EventRepository;
+import likelion.festival.domain.Event;
+import likelion.festival.repository.EventRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
