@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    container_name: fall-festival-server-prod
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    env_file:
+      - .env
+    depends_on:
+      tunnel:
+        condition: service_healthy
+
+  tunnel:
+    image: kroniak/ssh-client
+    container_name: fall-festival-tunnel-prod
+    env_file:
+      - .env
+    volumes:
+      - ${SSH_KEY_PATH}:/root/.ssh/id_rsa:ro
+    healthcheck:
+      test: ["CMD", "sh", "-c", "netstat -lnt | grep -q :3306"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+    command: >
+      ssh -N -o StrictHostKeyChecking=no
+      -L 0.0.0.0:3306:${DB_HOST}:3306
+      -i /root/.ssh/id_rsa
+      ${SSH_USER}@${SSH_HOST_IP}
