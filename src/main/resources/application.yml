@@ -22,3 +22,33 @@ spring:
 logging:
   level:
     org.springframework: INFO
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  datasource:
+    url: jdbc:mysql://localhost:3307/festival
+    username: root
+    password:
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  datasource:
+    url: ${PROD_DB_URL}
+    username: ${PROD_DB_USERNAME}
+    password: ${PROD_DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+
+logging:
+  level:
+    org.springframework: INFO
