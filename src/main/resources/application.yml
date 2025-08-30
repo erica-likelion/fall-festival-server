@@ -49,6 +49,9 @@ spring:
     hibernate:
       ddl-auto: create
 
+cors:
+  allowed_origin: https://espero.app
+
 logging:
   level:
     org.springframework: INFO
