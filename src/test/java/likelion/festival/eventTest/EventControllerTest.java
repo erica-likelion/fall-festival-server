@@ -45,6 +45,7 @@ class EventControllerTest {
                 .endTime(LocalDateTime.now().plusHours(1))
                 .place("주막거리")
                 .period("9/13~9/14")
+                .noticeId(null)
                 .build();
 
         List<EventResponse> events = List.of(event1);
