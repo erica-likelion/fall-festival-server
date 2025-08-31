@@ -30,6 +30,7 @@ jobs:
         run: |
           docker build -t festival-app:latest .
           docker save festival-app:latest -o festival-app.tar
+          chmod 644 festival-app.tar
 
       # 5. 서버로 파일 전송
       - name: Transfer files to server
@@ -41,6 +42,7 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           source: "festival-app.tar,docker-compose-prod.yml,scripts/deploy.sh,scripts/health-check.sh"
           target: /home/festival/
+          overwrite: 'true'
 
       # 6. 서버에서 무중단 배포 실행
       - name: Deploy to server
