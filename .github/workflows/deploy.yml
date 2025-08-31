@@ -25,28 +25,24 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      # 5. Docker 이미지 빌드 및 저장
+      # 4. Docker 이미지 빌드 및 저장
       - name: Build Docker image
         run: |
           docker build -t festival-app:latest .
           docker save festival-app:latest -o festival-app.tar
 
-      # 6. 서버로 파일 전송
+      # 5. 서버로 파일 전송
       - name: Transfer files to server
-        uses: appleboy/scp-action@v0.1.4
+        uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: ${{ secrets.SERVER_PORT }}
-          source: |
-            festival-app.tar
-            docker-compose-prod.yml
-            scripts/deploy.sh
-            scripts/health-check.sh
+          source: "festival-app.tar,docker-compose-prod.yml,scripts/deploy.sh,scripts/health-check.sh"
           target: /home/festival/
 
-      # 7. 서버에서 무중단 배포 실행
+      # 6. 서버에서 무중단 배포 실행
       - name: Deploy to server
         uses: appleboy/ssh-action@v0.1.5
         with:
@@ -59,7 +55,7 @@ jobs:
             chmod +x scripts/deploy.sh
             ./scripts/deploy.sh
 
-      # 8. 배포 완료 알림
+      # 7. 배포 완료 알림
       - name: Notify deployment success
         if: success()
         run: |
