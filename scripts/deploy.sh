@@ -8,7 +8,7 @@ DOCKER_IMAGE="festival-app:latest"
 LOG_DIR="$PROJECT_DIR/logs"
 BACKUP_DIR="$PROJECT_DIR/backup"
 
-# --- Nginx 연동에 필요한 변수 ---
+# --- Nginx 연동에 필요한 변수 (추가)---
 COMPOSE_FILE="$PROJECT_DIR/docker-compose-prod.yml"
 NGINX_CONTAINER="festival-nginx-prod"
 UPSTREAM_CONF_FILE="$PROJECT_DIR/nginx/conf.d/upstream.conf"
@@ -30,7 +30,7 @@ cd "$PROJECT_DIR" || { error "디렉토리 이동 실패"; exit 1; }
 
 log "Festival Spring Boot 서버 무중단 배포 시작..."
 
-# --- 배포 시작 시 Nginx 컨테이너 실행 보장 ---
+# --- 배포 시작 시 Nginx 컨테이너 실행 보장(추가) ---
 log "Nginx 및 네트워크 상태 확인..."
 if ! docker-compose -p festival -f "$COMPOSE_FILE" up -d nginx; then
     error "Nginx 컨테이너 시작 실패."
@@ -63,7 +63,7 @@ fi
 
 # 4. 새 컨테이너로 서비스 시작
 log "새 컨테이너($NEW_CONTAINER_NAME) 시작 중..."
-# --- network 옵션 추가 ---
+# --- network 옵션 추가 (추가)---
 docker run -d \
     --name "$NEW_CONTAINER_NAME" \
     -p 127.0.0.1:8081:8080 \
@@ -76,7 +76,7 @@ if [ $? -ne 0 ]; then
     error "새 컨테이너 시작 실패"; exit 1
 fi
 
-# 5. 새 컨테이너 헬스체크 (기존과 동일)
+# 5. 새 컨테이너 헬스체크
 log "새 서버 헬스체크 중..."
 chmod +x scripts/health-check.sh
 if ! ./scripts/health-check.sh 8081; then
