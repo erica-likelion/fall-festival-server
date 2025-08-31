@@ -34,10 +34,10 @@ public class Pub {
     @Column(nullable = false)
     private Boolean takeout;
 
-    @Column(name = "profile_image", length = 500)
+    @Column(name = "profile_image", length = 500, nullable = false)
     private String profileImage;
 
-    @Column(name = "poster_image", length = 500)
+    @Column(name = "poster_image", length = 500, nullable = false)
     private String posterImage;
 
     @OneToMany(mappedBy = "pub", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

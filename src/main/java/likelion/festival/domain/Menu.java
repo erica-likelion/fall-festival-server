@@ -27,7 +27,7 @@ public class Menu {
     @Column(nullable = false)
     private Category category;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String description;
 
     @Column(nullable = false)
