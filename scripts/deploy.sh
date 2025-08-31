@@ -72,6 +72,7 @@ docker rm -f "$NEW_CONTAINER_NAME" 2>/dev/null || true
 # 항상 컨테이너 네트워크 통신 사용
 docker run -d \
     --name "$NEW_CONTAINER_NAME" \
+    -p 127.0.0.1:8081:8080 \
     --network "$NETWORK_NAME" \
     --env-file .env.prod \
     --restart unless-stopped \
@@ -84,33 +85,13 @@ fi
 
 # 5. 새 컨테이너 헬스체크
 log "새 서버 헬스체크 중..."
-
-# 새 컨테이너의 IP 주소 획득
-NEW_CONTAINER_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "$NEW_CONTAINER_NAME")
-log "새 컨테이너 IP: $NEW_CONTAINER_IP"
-
-# 헬스체크
-HEALTH_CHECK_URL="http://${NEW_CONTAINER_IP}:8080/actuator/health"
-MAX_ATTEMPTS=30
-ATTEMPT=1
-
-while [ $ATTEMPT -le $MAX_ATTEMPTS ]; do
-    log "헬스체크 시도 $ATTEMPT/$MAX_ATTEMPTS... ($HEALTH_CHECK_URL)"
-
-    if curl -s -f "$HEALTH_CHECK_URL" > /dev/null 2>&1; then
-        log "새 서버 헬스체크 성공"
-        break
-    fi
-
-    if [ $ATTEMPT -eq $MAX_ATTEMPTS ]; then
-        error "새 서버 헬스체크 실패. 롤백을 진행합니다."
-        docker stop "$NEW_CONTAINER_NAME" && docker rm "$NEW_CONTAINER_NAME"
-        exit 1
-    fi
-
-    sleep 5
-    ATTEMPT=$((ATTEMPT + 1))
-done
+chmod +x scripts/health-check.sh
+if ! ./scripts/health-check.sh 8081; then
+    error "새 서버 헬스체크 실패. 롤백을 진행합니다."
+    docker stop "$NEW_CONTAINER_NAME" && docker rm "$NEW_CONTAINER_NAME"
+    exit 1
+fi
+log "새 서버 헬스체크 성공"
 
 # 6. Nginx 트래픽 전환
 log "Nginx 트래픽을 새 컨테이너로 전환합니다..."
