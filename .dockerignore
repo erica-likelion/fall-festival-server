@@ -13,9 +13,26 @@ gradlew.bat
 # IDE
 .idea/
 *.iml
+.project
+.classpath
+.settings/
+.vscode/
 
 # OS
 .DS_Store
+Thumbs.db
 
 # Env
 .env
+.env.*
+*.env
+
+# Log
+logs/
+*.log
+
+# Docs
+README.md
+*.md
+LICENSE
+CHANGELOG.md
