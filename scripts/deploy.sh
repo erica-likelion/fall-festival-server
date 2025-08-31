@@ -32,7 +32,7 @@ log "Festival Spring Boot 서버 무중단 배포 시작..."
 
 # --- 배포 시작 시 Nginx 컨테이너 실행 보장(추가) ---
 log "Nginx 및 네트워크 상태 확인..."
-if ! docker-compose -p festival -f "$COMPOSE_FILE" up -d nginx; then
+if ! docker compose -f "$COMPOSE_FILE" up -d nginx; then
     error "Nginx 컨테이너 시작 실패."
     exit 1
 fi
