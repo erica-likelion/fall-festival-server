@@ -6,6 +6,8 @@ spring:
     name: festival
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
+  jackson:
+    property-naming-strategy: SNAKE_CASE
 
 management:
   endpoints:
