@@ -3,13 +3,13 @@ package likelion.festival.domain;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="fortune")
+@Table(name = "fortune")
 public class Fortune {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 500)
     private String imageUrl;
 
     public Long getId() {
