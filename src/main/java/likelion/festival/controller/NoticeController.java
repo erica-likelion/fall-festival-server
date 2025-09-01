@@ -17,7 +17,7 @@ public class NoticeController {
 
     @GetMapping
     public ApiSuccess<List<NoticeDto>> getNotices() {
-        return new ApiSuccess<>(noticeService.getAll(), "공연 목록 조회 완료");
+        return new ApiSuccess<>(noticeService.getAll(), "공지 목록 조회 완료");
     }
 
     @GetMapping("/{id}")
