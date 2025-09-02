@@ -1,6 +1,7 @@
 package likelion.festival.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -18,16 +19,13 @@ public class Performance {
      * 공연 일차 열거형
      */
     @Getter
+    @AllArgsConstructor
     public enum Day {
         FIRST("1일차"),
         SECOND("2일차"),
         THIRD("3일차");
 
         private final String value;
-
-        Day(String value) {
-            this.value = value;
-        }
     }
 
     @Id
