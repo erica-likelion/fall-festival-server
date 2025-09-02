@@ -36,17 +36,25 @@ public class Event {
     @Column(nullable = false, length = 50)
     private String place;
 
+    @Column(nullable = false)
+    private Double latitude;
+
+    @Column(nullable = false)
+    private Double longitude;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "notice_id")
     private Notice notice;
 
     @Builder
-    public Event(String title, LocalDateTime startTime, LocalDateTime endTime, String period, String place, Notice notice) {
+    public Event(String title, LocalDateTime startTime, LocalDateTime endTime, String period, String place, Double latitude, Double longitude, Notice notice) {
         this.title = title;
         this.startTime = startTime;
         this.endTime = endTime;
         this.period = period;
         this.place = place;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.notice = notice;
     }
 }

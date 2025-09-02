@@ -22,6 +22,12 @@ public class Pub {
     @Column(length = 50, nullable = false)
     private String location;
 
+    @Column(nullable = false)
+    private Double latitude;
+
+    @Column(nullable = false)
+    private Double longitude;
+
     @Column(length = 50, nullable = false)
     private String type;
 
