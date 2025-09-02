@@ -12,6 +12,9 @@ import lombok.Getter;
 @Table(name = "menus")
 public class Menu {
 
+    /**
+     * 메뉴 카테고리 열거형
+     */
     public enum Category {
         main, side, drink
     }
