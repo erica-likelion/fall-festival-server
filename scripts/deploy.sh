@@ -91,7 +91,7 @@ log "새 컨테이너 IP: $NEW_CONTAINER_IP"
 
 # 헬스체크
 HEALTH_CHECK_URL="http://${NEW_CONTAINER_IP}:8080/actuator/health"
-MAX_ATTEMPTS=30
+MAX_ATTEMPTS=20
 ATTEMPT=1
 
 while [ $ATTEMPT -le $MAX_ATTEMPTS ]; do
