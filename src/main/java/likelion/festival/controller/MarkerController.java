@@ -1,6 +1,7 @@
 package likelion.festival.controller;
 
 import likelion.festival.dto.MarkerResponseDto;
+import likelion.festival.exception.ApiSuccess;
 import likelion.festival.service.MarkerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,9 +25,10 @@ public class MarkerController {
      * 전체 마커 목록 조회
      */
     @GetMapping
-    public ResponseEntity<List<MarkerResponseDto>> getAllMarkers() {
+    public ResponseEntity<ApiSuccess<List<MarkerResponseDto>>> getAllMarkers() {
         List<MarkerResponseDto> markers = markerService.getAllMarkers();
-        return ResponseEntity.ok(markers);
+        return ResponseEntity.ok(ApiSuccess.of(markers, "마커 목록 조회 완료"));
     }
+
 }
 
