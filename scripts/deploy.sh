@@ -69,10 +69,11 @@ log "새 컨테이너($NEW_CONTAINER_NAME) 시작 중..."
 # 실패한 컨테이너가 있다면 정리
 docker rm -f "$NEW_CONTAINER_NAME" 2>/dev/null || true
 
-# 항상 컨테이너 네트워크 통신 사용
+# 항상 컨테이너 네트워크 통신 사용 (임시로 로컬 DB 사용을 위해 add-host 옵션 추가)
 docker run -d \
     --name "$NEW_CONTAINER_NAME" \
     --network "$NETWORK_NAME" \
+    --add-host=host.docker.internal:host-gateway \
     --env-file .env.prod \
     --restart unless-stopped \
     -v "$LOG_DIR:/app/logs" \
