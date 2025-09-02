@@ -47,14 +47,12 @@ public class Event {
     private Notice notice;
 
     @Builder
-    public Event(String title, LocalDateTime startTime, LocalDateTime endTime, String period, String place, Double latitude, Double longitude, Notice notice) {
+    public Event(String title, LocalDateTime startTime, LocalDateTime endTime, String period, String place, Notice notice) {
         this.title = title;
         this.startTime = startTime;
         this.endTime = endTime;
         this.period = period;
         this.place = place;
-        this.latitude = latitude;
-        this.longitude = longitude;
         this.notice = notice;
     }
 }
