@@ -38,5 +38,8 @@ out/
 ### VS Code ###
 .vscode/
 
-# OS
+### OS ###
 .DS_Store
+
+### Dummy Data SQL ###
+db-dummy-setup.sql
