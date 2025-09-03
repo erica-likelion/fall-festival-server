@@ -30,7 +30,4 @@ public class Artist {
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Song> songs = new ArrayList<>();
-
-    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Performance> performances = new ArrayList<>();
 }

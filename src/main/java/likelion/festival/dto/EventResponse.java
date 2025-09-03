@@ -14,8 +14,8 @@ public class EventResponse {
     private final String title;
     private final LocalDateTime startTime;
     private final LocalDateTime endTime;
-    private final String place;
     private final String period;
+    private final String place;
     private final Long noticeId;
 
     public static EventResponse from(Event event) {
@@ -24,8 +24,8 @@ public class EventResponse {
                 .title(event.getTitle())
                 .startTime(event.getStartTime())
                 .endTime(event.getEndTime())
-                .place(event.getPlace())
                 .period(event.getPeriod())
+                .place(event.getPlace())
                 .noticeId(event.getNotice() != null ? event.getNotice().getId() : null)
                 .build();
     }
