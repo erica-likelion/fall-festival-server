@@ -2,7 +2,8 @@ package likelion.festival.service;
 
 import likelion.festival.domain.Pub;
 import likelion.festival.dto.MenuResponseDto;
-import likelion.festival.dto.PubResponseDto;
+import likelion.festival.dto.PubResponseDtos.PubDetailDto;
+import likelion.festival.dto.PubResponseDtos.PubSummaryDto;
 import likelion.festival.exception.ApiException;
 import likelion.festival.exception.ErrorCode;
 import likelion.festival.repository.MenuRepository;
@@ -27,20 +28,20 @@ public class PubService {
     /**
      * 전체 주점 목록 조회
      */
-    public List<PubResponseDto> getAllPubs() {
+    public List<PubSummaryDto> getAllPubs() {
         return pubRepository.findAll()
                 .stream()
-                .map(PubResponseDto::from)
+                .map(PubSummaryDto::from)
                 .toList();
     }
 
     /**
      * 특정 주점 정보 조회
      */
-    public PubResponseDto getPubById(Long id) {
+    public PubDetailDto getPubById(Long id) {
         Pub pub = pubRepository.findById(id)
                 .orElseThrow(() -> new ApiException(ErrorCode.PUB_NOT_FOUND, "주점 ID: " + id));
-        return PubResponseDto.from(pub);
+        return PubDetailDto.from(pub);
     }
 
     /**
