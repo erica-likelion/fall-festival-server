@@ -6,6 +6,8 @@ import likelion.festival.dto.FortuneRequestDto;
 import likelion.festival.dto.FortuneResponseDto;
 import likelion.festival.repository.FortuneRepository;
 import likelion.festival.repository.UserDailyFortuneRepository;
+import likelion.festival.exception.ApiException;
+import likelion.festival.exception.ErrorCode;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -75,7 +77,7 @@ public class FortuneService {
 
         UserDailyFortune saved = userDailyFortuneRepository
                 .findByUserKeyAndFortuneDate(userKey, today)
-                .orElseThrow(() -> new IllegalStateException("Failed to save or retrieve daily fortune."));
+                .orElseThrow(() -> new ApiException(ErrorCode.INTERNAL_SERVER_ERROR));
 
         return fortuneResponse(saved.getFortune());
     }
