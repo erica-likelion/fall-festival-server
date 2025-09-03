@@ -12,6 +12,7 @@ public enum ErrorCode {
     VALIDATION_FAILED(HttpStatus.BAD_REQUEST, "E400002", "유효성 검증에 실패했습니다."),
 
     // 404 Not Found
+    ENDPOINT_NOT_FOUND(HttpStatus.NOT_FOUND, "E404000", "존재하지 않는 엔드포인트입니다."),
     MENU_NOT_FOUND(HttpStatus.NOT_FOUND, "E404001", "메뉴를 찾을 수 없습니다."),
     PUB_NOT_FOUND(HttpStatus.NOT_FOUND, "E404002", "주점을 찾을 수 없습니다."),
     ARTIST_NOT_FOUND(HttpStatus.NOT_FOUND, "E404003", "가수를 찾을 수 없습니다."),
