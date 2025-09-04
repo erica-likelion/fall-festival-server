@@ -34,7 +34,6 @@ public class NoticeService {
     }
 
     // 공지사항 한개 불러오기
-    @Cacheable("noticeById")
     public NoticeDto getById(Long id) {
         Notice notice = noticeRepository.findById(id)
                 .orElseThrow(() -> new ApiException(ErrorCode.NOTICE_NOT_FOUND, "id = " + id));
