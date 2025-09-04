@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Builder
-public class ContentResponse {
+public class ContentResponseDto {
 
     private final Long id;
     private final String title;
