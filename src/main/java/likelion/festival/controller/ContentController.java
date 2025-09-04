@@ -26,7 +26,7 @@ public class ContentController {
         if(contents.isEmpty()){
             throw new ApiException(ErrorCode.CONTENT_NOT_FOUND);
         }
-        return ResponseEntity.ok(ApiSuccess.of(contents, "현재 진행중인 컨텐츠 조회 성공"));
+        return ResponseEntity.ok(ApiSuccess.of(contents, "현재 진행중인 콘텐츠 조회 성공"));
     }
 
 }
