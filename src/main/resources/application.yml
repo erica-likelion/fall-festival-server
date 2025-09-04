@@ -45,7 +45,7 @@ logging:
     root: INFO
 
 ---
-# 프로덕션 환경 프로파일(prod)
+# 프로덕션 환경 프로파일
 spring:
   config:
     activate:
