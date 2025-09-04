@@ -16,7 +16,7 @@ public class Menu {
      * 메뉴 카테고리 열거형
      */
     public enum Category {
-        main, side, drink
+        main, side, others
     }
 
     @Id
@@ -30,7 +30,7 @@ public class Menu {
     @Column(nullable = false)
     private Category category;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(columnDefinition = "TEXT") // category == others인 경우 null
     private String description;
 
     @Column(nullable = false)
