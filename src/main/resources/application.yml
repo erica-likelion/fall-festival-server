@@ -17,7 +17,7 @@ management:
       show-details: when-authorized
 
 cors:
-  allowed_origin: https://espero.app
+  allowed-origins: https://espero.app
 
 ---
 # 개발 환경 프로파일

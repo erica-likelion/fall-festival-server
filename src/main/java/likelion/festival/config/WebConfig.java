@@ -6,17 +6,16 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class CorsConfig implements WebMvcConfigurer {
+public class WebConfig implements WebMvcConfigurer {
 
-    @Value("${cors.allowed_origin}")
+    @Value("${cors.allowed-origins}")
     private String allowedOrigins;
 
     @Override
-    public void addCorsMappings(CorsRegistry registry){
-        registry.addMapping("/**")
-                //cors 허용
-                .allowedOrigins(allowedOrigins) //혹시모를 나중에 위해 여러개 넣을 수도
-                .allowedMethods("GET","POST","PUT","PATCH","DELETE","OPTIONS")
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/api/**")
+                .allowedOrigins(allowedOrigins)
+                .allowedMethods("GET", "POST", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true)
                 .maxAge(3600);
