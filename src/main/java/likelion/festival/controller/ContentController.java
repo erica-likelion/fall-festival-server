@@ -1,6 +1,6 @@
 package likelion.festival.controller;
 
-import likelion.festival.dto.ContentResponse;
+import likelion.festival.dto.ContentResponseDto;
 import likelion.festival.service.ContentService;
 import likelion.festival.exception.ApiException;
 import likelion.festival.exception.ApiSuccess;
@@ -21,8 +21,8 @@ public class ContentController {
     private final ContentService contentService;
 
     @GetMapping
-    public ResponseEntity<ApiSuccess<List<ContentResponse>>> getCurrentContents(){
-        List<ContentResponse> contents = contentService.findCurrentContent();
+    public ResponseEntity<ApiSuccess<List<ContentResponseDto>>> getCurrentContents(){
+        List<ContentResponseDto> contents = contentService.findCurrentContents();
         if(contents.isEmpty()){
             throw new ApiException(ErrorCode.CONTENT_NOT_FOUND);
         }

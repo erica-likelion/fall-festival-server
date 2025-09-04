@@ -2,7 +2,7 @@ package likelion.festival.eventTest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import likelion.festival.controller.ContentController;
-import likelion.festival.dto.ContentResponse;
+import likelion.festival.dto.ContentResponseDto;
 import likelion.festival.service.ContentService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,7 +38,7 @@ class ContentControllerTest {
     @DisplayName("현재 진행중인 이벤트 조회 성공")
     void getCurrentContents_Success() throws Exception {
         // given
-        ContentResponse event1 = ContentResponse.builder()
+        ContentResponseDto event1 = ContentResponseDto.builder()
                 .id(1L)
                 .title("타임어택! 칵테일 빨리 마시기")
                 .startTime(LocalDateTime.now().minusHours(1))
@@ -48,7 +48,7 @@ class ContentControllerTest {
                 .noticeId(null)
                 .build();
 
-        List<ContentResponse> events = List.of(event1);
+        List<ContentResponseDto> events = List.of(event1);
         given(contentService.findCurrentContent()).willReturn(events);
 
         // when & then

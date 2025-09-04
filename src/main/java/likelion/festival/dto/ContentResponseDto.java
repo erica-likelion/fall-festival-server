@@ -18,8 +18,8 @@ public class ContentResponseDto {
     private final String place;
     private final Long noticeId;
 
-    public static ContentResponse from(Content content) {
-        return ContentResponse.builder()
+    public static ContentResponseDto from(Content content) {
+        return ContentResponseDto.builder()
                 .id(content.getId())
                 .title(content.getTitle())
                 .startTime(content.getStartTime())
