@@ -19,7 +19,7 @@ public enum ErrorCode {
     PERFORMANCE_NOT_FOUND(HttpStatus.NOT_FOUND, "E404004", "공연을 찾을 수 없습니다."),
     FORTUNE_NOT_FOUND(HttpStatus.NOT_FOUND, "E404005", "운세를 찾을 수 없습니다."),
     NOTICE_NOT_FOUND(HttpStatus.NOT_FOUND, "E404006", "공지사항을 찾을 수 없습니다."),
-    CONTENT_NOT_FOUND(HttpStatus.NOT_FOUND, "E404007", "현재 진행중인 컨텐츠가 없습니다."),
+    CONTENT_NOT_FOUND(HttpStatus.NOT_FOUND, "E404007", "현재 진행중인 콘텐츠가 없습니다."),
     MARKER_NOT_FOUND(HttpStatus.NOT_FOUND, "E404008", "마커를 찾을 수 없습니다."),
 
     // 500 Internal Server Error
