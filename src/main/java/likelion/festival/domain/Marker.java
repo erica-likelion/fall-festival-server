@@ -22,7 +22,7 @@ public class Marker {
     @AllArgsConstructor
     public enum Category {
         PUB("주점"),
-        CONTENT("컨텐츠"),
+        CONTENT("콘텐츠"),
         FOOD_TRUCK("푸드트럭"),
         PROMOTION("프로모션"),
         TOILET("화장실"),
