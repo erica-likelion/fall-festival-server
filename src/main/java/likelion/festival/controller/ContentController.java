@@ -15,7 +15,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/api/events")
+@RequestMapping("/api/contents")
 public class ContentController {
 
     private final ContentService contentService;
@@ -26,7 +26,7 @@ public class ContentController {
         if(contents.isEmpty()){
             throw new ApiException(ErrorCode.CONTENT_NOT_FOUND);
         }
-        return ResponseEntity.ok(ApiSuccess.of(contents, "현재 진행중인 컨텐트 조회 성공"));
+        return ResponseEntity.ok(ApiSuccess.of(contents, "현재 진행중인 컨텐츠 조회 성공"));
     }
 
 }
