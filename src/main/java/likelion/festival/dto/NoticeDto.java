@@ -1,12 +1,13 @@
 package likelion.festival.dto;
 
 import likelion.festival.domain.Notice;
+import java.util.List;
 
 public record NoticeDto(
         Long id,
         String title,
         String content,
-        String image,
+        List<String> images,
         String tag
 ) {
     // 엔티티 Notice를 dto로 변환해주는 헬퍼
@@ -16,7 +17,7 @@ public record NoticeDto(
                 n.getId(),
                 n.getTitle(),
                 n.getContent(),
-                n.getImage(),
+                n.getImages(),
                 n.getTag()
         );
     }
