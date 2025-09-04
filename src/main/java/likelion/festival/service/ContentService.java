@@ -17,7 +17,7 @@ public class ContentService {
 
     private final ContentRepository contentRepository;
 
-    public List<ContentResponse> findCurrentContent(){
+    public List<ContentResponse> findCurrentContents(){
         LocalDateTime now = LocalDateTime.now();
         return contentRepository.findActiveContents(now).stream()
                 .map(ContentResponse::from)
