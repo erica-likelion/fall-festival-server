@@ -1,7 +1,7 @@
 package likelion.festival.eventTest;
 
-import likelion.festival.domain.Event;
-import likelion.festival.repository.EventRepository;
+import likelion.festival.domain.Content;
+import likelion.festival.repository.ContentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,10 +18,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class EventSortedTest {
+class ContentSortedTest {
 
     @Autowired
-    private EventRepository eventRepository;
+    private ContentRepository contentRepository;
 
     @Autowired
     private TestEntityManager entityManager;
@@ -65,33 +65,33 @@ class EventSortedTest {
         );
 
         // when
-        List<Event> activeEvents = eventRepository.findActiveEvents(now);
+        List<Content> activeContents = contentRepository.findActiveEvents(now);
 
         // then
         System.out.println("\n--- Sorted Active Events ---");
-        activeEvents.forEach(event ->
+        activeContents.forEach(content ->
                 System.out.printf("Title: %-30s | Start: %s | End: %s%n",
-                        event.getTitle(),
-                        event.getStartTime(),
-                        event.getEndTime())
+                        content.getTitle(),
+                        content.getStartTime(),
+                        content.getEndTime())
         );
         System.out.println("------------------------------------------------------------------------------------\n");
 
-        List<String> actualTitles = activeEvents.stream()
-                .map(Event::getTitle)
+        List<String> actualTitles = activeContents.stream()
+                .map(Content::getTitle)
                 .collect(Collectors.toList());
 
-        assertThat(activeEvents).hasSize(8);
+        assertThat(activeContents).hasSize(8);
         assertThat(actualTitles).isEqualTo(expectedOrder);
     }
 
     private void createEvent(String title, LocalDateTime startTime, LocalDateTime endTime) {
-        Event event = Event.builder()
+        Content content = Content.builder()
                 .title(title)
                 .startTime(startTime)
                 .endTime(endTime)
                 .notice(null)
                 .build();
-        entityManager.persist(event);
+        entityManager.persist(content);
     }
 }

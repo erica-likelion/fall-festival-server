@@ -15,7 +15,8 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Event {
+@Table(name = "contents")
+public class Content {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,7 +48,7 @@ public class Event {
     private Notice notice;
 
     @Builder
-    public Event(String title, LocalDateTime startTime, LocalDateTime endTime, String period, String place, Notice notice) {
+    public Content(String title, LocalDateTime startTime, LocalDateTime endTime, String period, String place, Notice notice) {
         this.title = title;
         this.startTime = startTime;
         this.endTime = endTime;
