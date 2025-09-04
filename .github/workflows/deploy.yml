@@ -40,7 +40,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: ${{ secrets.SERVER_PORT }}
-          source: "festival-app.tar,docker-compose-prod.yml,scripts/deploy.sh,scripts/health-check.sh"
+          source: "festival-app.tar,docker-compose-prod.yml,scripts/deploy.sh"
           target: /home/festival/
           overwrite: 'true'
 
