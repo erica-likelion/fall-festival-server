@@ -1,9 +1,9 @@
 package likelion.festival.eventTest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import likelion.festival.controller.EventController;
-import likelion.festival.dto.EventResponse;
-import likelion.festival.service.EventService;
+import likelion.festival.controller.ContentController;
+import likelion.festival.dto.ContentResponse;
+import likelion.festival.service.ContentService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +22,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(EventController.class)
-class EventControllerTest {
+@WebMvcTest(ContentController.class)
+class ContentControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -32,13 +32,13 @@ class EventControllerTest {
     private ObjectMapper objectMapper;
 
     @MockBean
-    private EventService eventService;
+    private ContentService contentService;
 
     @Test
     @DisplayName("현재 진행중인 이벤트 조회 성공")
-    void getCurrentEvents_Success() throws Exception {
+    void getCurrentContents_Success() throws Exception {
         // given
-        EventResponse event1 = EventResponse.builder()
+        ContentResponse event1 = ContentResponse.builder()
                 .id(1L)
                 .title("타임어택! 칵테일 빨리 마시기")
                 .startTime(LocalDateTime.now().minusHours(1))
@@ -48,8 +48,8 @@ class EventControllerTest {
                 .noticeId(null)
                 .build();
 
-        List<EventResponse> events = List.of(event1);
-        given(eventService.findCurrentEvents()).willReturn(events);
+        List<ContentResponse> events = List.of(event1);
+        given(contentService.findCurrentContent()).willReturn(events);
 
         // when & then
         mockMvc.perform(get("/api/events")
@@ -64,9 +64,9 @@ class EventControllerTest {
 
     @Test
     @DisplayName("현재 진행중인 이벤트가 없을 경우 404 에러 발생")
-    void getCurrentEvents_Fail_EventNotFound() throws Exception {
+    void getCurrentContents_Fail_EventNotFound() throws Exception {
         // given
-        given(eventService.findCurrentEvents()).willReturn(Collections.emptyList());
+        given(contentService.findCurrentContent()).willReturn(Collections.emptyList());
 
         // when & then
         mockMvc.perform(get("/api/events")

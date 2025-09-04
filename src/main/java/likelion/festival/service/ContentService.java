@@ -1,7 +1,7 @@
 package likelion.festival.service;
 
-import likelion.festival.dto.EventResponse;
-import likelion.festival.repository.EventRepository;
+import likelion.festival.dto.ContentResponse;
+import likelion.festival.repository.ContentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,14 +13,14 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class EventService {
+public class ContentService {
 
-    private final EventRepository eventRepository;
+    private final ContentRepository contentRepository;
 
-    public List<EventResponse> findCurrentEvents(){
+    public List<ContentResponse> findCurrentContent(){
         LocalDateTime now = LocalDateTime.now();
-        return eventRepository.findActiveEvents(now).stream()
-                .map(EventResponse::from)
+        return contentRepository.findActiveContents(now).stream()
+                .map(ContentResponse::from)
                 .collect(Collectors.toList());
     }
 }

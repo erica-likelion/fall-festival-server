@@ -1,6 +1,6 @@
 package likelion.festival.repository;
 
-import likelion.festival.domain.Event;
+import likelion.festival.domain.Content;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -10,9 +10,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
-public interface EventRepository extends JpaRepository<Event, Long> {
+public interface ContentRepository extends JpaRepository<Content, Long> {
 
-    @Query("SELECT e FROM Event e WHERE :now BETWEEN e.startTime AND e.endTime ORDER BY e.startTime DESC, e.endTime ASC")
-    List<Event> findActiveEvents(@Param("now") LocalDateTime now);
+    @Query("SELECT c  FROM Content c WHERE :now BETWEEN c.startTime AND c.endTime ORDER BY c.startTime DESC, c.endTime ASC")
+    List<Content> findActiveContents(@Param("now") LocalDateTime now);
 
 }

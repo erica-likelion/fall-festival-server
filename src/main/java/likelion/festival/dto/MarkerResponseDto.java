@@ -52,8 +52,8 @@ public record MarkerResponseDto(
      * 마커 연결 정보를 확인하는 메서드
      */
     private static LinkInfo checkLinkInfo(Marker marker) {
-        if (marker.hasEventLink() && marker.getEvent().getNotice() != null) {
-            return new LinkInfo("NOTICE_DETAIL", marker.getEvent().getNotice().getId());
+        if (marker.hasContentLink() && marker.getContent().getNotice() != null) {
+            return new LinkInfo("NOTICE_DETAIL", marker.getContent().getNotice().getId());
         }
 
         if (marker.hasPubLink()) {

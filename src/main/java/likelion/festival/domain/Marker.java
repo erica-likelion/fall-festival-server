@@ -22,9 +22,9 @@ public class Marker {
     @AllArgsConstructor
     public enum Category {
         PUB("주점"),
-        EVENT("이벤트"),
+        CONTENT("컨텐츠"),
         FOOD_TRUCK("푸드트럭"),
-        CONTENT("콘텐츠"),
+        PROMOTION("프로모션"),
         TOILET("화장실"),
         MEDICAL_ROOM("의무실"),
         SHUTTLE_COCK("셔틀콕"),
@@ -68,8 +68,8 @@ public class Marker {
     private Pub pub;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "event_id")
-    private Event event;
+    @JoinColumn(name = "contend_id")
+    private Content content;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "notice_id")
@@ -77,20 +77,20 @@ public class Marker {
 
     // 실제 위경도 반환 메서드 (연결된 Entity 참조)
     public Double getActualLatitude() {
-        return hasEventLink() ? event.getLatitude()
+        return hasContentLink() ? content.getLatitude()
                 : hasPubLink() ? pub.getLatitude()
                 : latitude;
     }
 
     public Double getActualLongitude() {
-        return hasEventLink() ? event.getLongitude()
+        return hasContentLink() ? content.getLongitude()
                 : hasPubLink() ? pub.getLongitude()
                 : longitude;
     }
 
     // 연결 정보 확인 메서드들
-    public boolean hasEventLink() {
-        return this.event != null;
+    public boolean hasContentLink() {
+        return this.content != null;
     }
 
     public boolean hasPubLink() {
