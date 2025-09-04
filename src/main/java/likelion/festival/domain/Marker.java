@@ -68,7 +68,7 @@ public class Marker {
     private Pub pub;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "contend_id")
+    @JoinColumn(name = "content_id")
     private Content content;
 
     @ManyToOne(fetch = FetchType.LAZY)
