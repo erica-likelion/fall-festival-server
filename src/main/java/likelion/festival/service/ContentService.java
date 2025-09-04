@@ -21,6 +21,6 @@ public class ContentService {
         LocalDateTime now = LocalDateTime.now();
         return contentRepository.findActiveContents(now).stream()
                 .map(ContentResponse::from)
-                .collect(Collectors.toList());
+                .toList();
     }
 }
