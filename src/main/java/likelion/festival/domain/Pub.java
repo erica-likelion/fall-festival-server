@@ -29,9 +29,6 @@ public class Pub {
     private Double longitude;
 
     @Column(length = 50, nullable = false)
-    private String type;
-
-    @Column(length = 50, nullable = false)
     private String affiliation;
 
     @Column(length = 50, nullable = false)

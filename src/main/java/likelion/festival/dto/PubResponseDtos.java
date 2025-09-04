@@ -8,7 +8,6 @@ public class PubResponseDtos {
      *
      * @param id           주점 ID
      * @param location     주점 위치
-     * @param type         주점 종류
      * @param affiliation  소속 단체
      * @param name         주점명
      * @param takeout      포장 가능 여부
@@ -18,7 +17,6 @@ public class PubResponseDtos {
     public record PubSummaryDto(
             Long id,
             String location,
-            String type,
             String affiliation,
             String name,
             Boolean takeout,
@@ -29,7 +27,6 @@ public class PubResponseDtos {
             return new PubSummaryDto(
                     pub.getId(),
                     pub.getLocation(),
-                    pub.getType(),
                     pub.getAffiliation(),
                     pub.getName(),
                     pub.getTakeout(),
@@ -46,7 +43,6 @@ public class PubResponseDtos {
      * @param location     주점 위치
      * @param latitude     위도
      * @param longitude    경도
-     * @param type         주점 종류
      * @param affiliation  소속 단체
      * @param name         주점명
      * @param takeout      포장 가능 여부
@@ -58,7 +54,6 @@ public class PubResponseDtos {
             String location,
             Double latitude,
             Double longitude,
-            String type,
             String affiliation,
             String name,
             Boolean takeout,
@@ -71,7 +66,6 @@ public class PubResponseDtos {
                     pub.getLocation(),
                     pub.getLatitude(),
                     pub.getLongitude(),
-                    pub.getType(),
                     pub.getAffiliation(),
                     pub.getName(),
                     pub.getTakeout(),
