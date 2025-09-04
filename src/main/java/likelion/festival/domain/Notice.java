@@ -3,6 +3,8 @@ package likelion.festival.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import com.vladmihalcea.hibernate.type.json.JsonType;
+import org.hibernate.annotations.Type;
 
 import java.util.List;
 
@@ -21,9 +23,9 @@ public class Notice {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
-    @ElementCollection
-    @CollectionTable(name = "notice_images" , joinColumns = @JoinColumn(name = "notice_id")) // 테이블 안에 리스트 컬럽을 직접 저장 불가해서 이런 방식 사용
-    @Column(name = "image_url", nullable = false, length = 500) // 어차피 인스타 글 따올거니까 무조건 사진 있을 예정. nullable = false로 수정
+    // 이미지url들 json 형식으로
+    @Type(JsonType.class)
+    @Column(columnDefinition = "json", nullable = false)
     private List<String> images;
 
     @Column(nullable = false, length = 50)
