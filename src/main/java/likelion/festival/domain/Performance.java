@@ -43,6 +43,6 @@ public class Performance {
     private LocalDateTime endTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "artist_id", nullable = false)
+    @JoinColumn(name = "artist_id") // 학생 공연의 경우 null
     private Artist artist;
 }
