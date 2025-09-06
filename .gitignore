@@ -44,5 +44,5 @@ out/
 ### OS ###
 .DS_Store
 
-### Dummy Data SQL ###
-db-dummy-setup.sql
+### SQL ###
+*.sql
