@@ -29,7 +29,7 @@ public class Marker {
         MEDICAL_ROOM("의무실"),
         SHUTTLE_COCK("셔틀콕"),
         PERFORMANCE_HALL("공연장"),
-        SMOKING_AREA("흡연실"),
+        SMOKING_AREA("흡연구역"),
         ALCOHOL_PURCHASE("주류 구매"),
         FLEA_MARKET("플리마켓"),
         AED("AED");
