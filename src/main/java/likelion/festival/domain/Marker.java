@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -55,7 +56,7 @@ public class Marker {
     private Double latitude;
     private Double longitude;
 
-    @Column(nullable = false, length = 50)
+    @Column(length = 50)
     private String time;
 
     @ElementCollection
@@ -95,6 +96,13 @@ public class Marker {
                 : hasPubLink() ? pub.getProfileImage()
                 : hasNoticeLink() ? notice.getImages().get(0)
                 : image;
+    }
+
+    // 실제 시간 반환 메서드 (연결된 Content 참조)
+    public String getActualTime() {
+        if (!hasContentLink()) return time;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        return content.getStartTime().format(formatter) + "~" + content.getEndTime().format(formatter);
     }
 
     // 연결 정보 확인 메서드들

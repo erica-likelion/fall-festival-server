@@ -41,7 +41,7 @@ public record MarkerResponseDto(
                 marker.getName(),
                 marker.getActualLatitude(),
                 marker.getActualLongitude(),
-                marker.getTime(),
+                marker.getActualTime(),
                 marker.getClosedDays() != null ? marker.getClosedDays() : List.of(),
                 linkInfo.type(),
                 linkInfo.id()
