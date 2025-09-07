@@ -37,7 +37,7 @@ public record MarkerResponseDto(
         return new MarkerResponseDto(
                 marker.getId(),
                 marker.getCategory().getValue(),
-                marker.getImage(),
+                marker.getActualImage(),
                 marker.getName(),
                 marker.getActualLatitude(),
                 marker.getActualLongitude(),

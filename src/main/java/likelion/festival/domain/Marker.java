@@ -45,7 +45,7 @@ public class Marker {
     @Column(nullable = false)
     private Category category;
 
-    @Column(nullable = false, length = 500)
+    @Column(length = 500)
     private String image;
 
     @Column(nullable = false, length = 50)
@@ -87,6 +87,14 @@ public class Marker {
         return hasContentLink() ? content.getLongitude()
                 : hasPubLink() ? pub.getLongitude()
                 : longitude;
+    }
+
+    // 실제 이미지 반환 메서드 (연결된 Entity 참조)
+    public String getActualImage() {
+        return hasContentLink() && content.getNotice() != null ? content.getNotice().getImages().get(0)
+                : hasPubLink() ? pub.getProfileImage()
+                : hasNoticeLink() ? notice.getImages().get(0)
+                : image;
     }
 
     // 연결 정보 확인 메서드들
