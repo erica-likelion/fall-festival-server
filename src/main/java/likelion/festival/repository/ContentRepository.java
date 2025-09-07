@@ -12,7 +12,10 @@ import java.util.List;
 @Repository
 public interface ContentRepository extends JpaRepository<Content, Long> {
 
-    @Query("SELECT c FROM Content c WHERE :now BETWEEN c.startTime AND c.endTime ORDER BY c.startTime DESC, c.endTime ASC")
+    @Query("SELECT c FROM Content c WHERE FUNCTION('DATE', :now) " +
+            "BETWEEN FUNCTION('DATE', c.startTime) AND FUNCTION('DATE', c.endTime) AND FUNCTION('TIME', :now) " +
+            "BETWEEN FUNCTION('TIME', c.startTime) AND FUNCTION('TIME', c.endTime) " +
+            "ORDER BY c.startTime DESC, c.endTime ASC")
     List<Content> findActiveContents(@Param("now") LocalDateTime now);
 
 }
