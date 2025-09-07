@@ -1,4 +1,4 @@
-package likelion.festival.eventTest;
+package likelion.festival.contentTest;
 
 import likelion.festival.domain.Content;
 import likelion.festival.repository.ContentRepository;
@@ -65,7 +65,7 @@ class ContentSortedTest {
         );
 
         // when
-        List<Content> activeContents = contentRepository.findActiveEvents(now);
+        List<Content> activeContents = contentRepository.findActiveContents(now);
 
         // then
         System.out.println("\n--- Sorted Active Events ---");
@@ -90,8 +90,24 @@ class ContentSortedTest {
                 .title(title)
                 .startTime(startTime)
                 .endTime(endTime)
+                .period("test-period")
+                .place("test-place")
                 .notice(null)
                 .build();
+
+        // Set non-nullable fields via reflection
+        try {
+            java.lang.reflect.Field latitudeField = Content.class.getDeclaredField("latitude");
+            latitudeField.setAccessible(true);
+            latitudeField.set(content, 0.0);
+
+            java.lang.reflect.Field longitudeField = Content.class.getDeclaredField("longitude");
+            longitudeField.setAccessible(true);
+            longitudeField.set(content, 0.0);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+
         entityManager.persist(content);
     }
 }
