@@ -1,4 +1,4 @@
-package likelion.festival.eventTest;
+package likelion.festival.contentTest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import likelion.festival.controller.ContentController;
@@ -49,7 +49,7 @@ class ContentControllerTest {
                 .build();
 
         List<ContentResponseDto> events = List.of(event1);
-        given(contentService.findCurrentContent()).willReturn(events);
+        given(contentService.findCurrentContents()).willReturn(events);
 
         // when & then
         mockMvc.perform(get("/api/events")
@@ -66,7 +66,7 @@ class ContentControllerTest {
     @DisplayName("현재 진행중인 이벤트가 없을 경우 404 에러 발생")
     void getCurrentContents_Fail_EventNotFound() throws Exception {
         // given
-        given(contentService.findCurrentContent()).willReturn(Collections.emptyList());
+        given(contentService.findCurrentContents()).willReturn(Collections.emptyList());
 
         // when & then
         mockMvc.perform(get("/api/events")
