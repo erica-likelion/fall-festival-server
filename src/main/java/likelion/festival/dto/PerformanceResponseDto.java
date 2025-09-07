@@ -25,7 +25,7 @@ public record PerformanceResponseDto(
     public static PerformanceResponseDto from(Performance performance) {
         return new PerformanceResponseDto(
                 performance.getId(),
-                performance.getArtist().getId(),
+                performance.getArtist() == null ? null : performance.getArtist().getId(),
                 performance.getDay().getValue(),
                 performance.getStartTime().format(FORMATTER),
                 performance.getEndTime().format(FORMATTER)
