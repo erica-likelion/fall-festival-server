@@ -37,11 +37,11 @@ public record MarkerResponseDto(
         return new MarkerResponseDto(
                 marker.getId(),
                 marker.getCategory().getValue(),
-                marker.getImage(),
+                marker.getActualImage(),
                 marker.getName(),
                 marker.getActualLatitude(),
                 marker.getActualLongitude(),
-                marker.getTime(),
+                marker.getActualTime(),
                 marker.getClosedDays() != null ? marker.getClosedDays() : List.of(),
                 linkInfo.type(),
                 linkInfo.id()

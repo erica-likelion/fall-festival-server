@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -29,9 +30,10 @@ public class Marker {
         MEDICAL_ROOM("의무실"),
         SHUTTLE_COCK("셔틀콕"),
         PERFORMANCE_HALL("공연장"),
-        SMOKING_AREA("흡연실"),
+        SMOKING_AREA("흡연구역"),
         ALCOHOL_PURCHASE("주류 구매"),
-        FLEA_MARKET("플리마켓");
+        FLEA_MARKET("플리마켓"),
+        AED("AED");
 
         private final String value;
     }
@@ -44,7 +46,7 @@ public class Marker {
     @Column(nullable = false)
     private Category category;
 
-    @Column(nullable = false, length = 500)
+    @Column(length = 500)
     private String image;
 
     @Column(nullable = false, length = 50)
@@ -54,7 +56,7 @@ public class Marker {
     private Double latitude;
     private Double longitude;
 
-    @Column(nullable = false, length = 50)
+    @Column(length = 50)
     private String time;
 
     @ElementCollection
@@ -86,6 +88,21 @@ public class Marker {
         return hasContentLink() ? content.getLongitude()
                 : hasPubLink() ? pub.getLongitude()
                 : longitude;
+    }
+
+    // 실제 이미지 반환 메서드 (연결된 Entity 참조)
+    public String getActualImage() {
+        return hasContentLink() && content.getNotice() != null ? content.getNotice().getImages().get(0)
+                : hasPubLink() ? pub.getProfileImage()
+                : hasNoticeLink() ? notice.getImages().get(0)
+                : image;
+    }
+
+    // 실제 시간 반환 메서드 (연결된 Content 참조)
+    public String getActualTime() {
+        if (!hasContentLink()) return time;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        return content.getStartTime().format(formatter) + "~" + content.getEndTime().format(formatter);
     }
 
     // 연결 정보 확인 메서드들
