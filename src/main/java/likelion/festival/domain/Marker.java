@@ -27,7 +27,7 @@ public class Marker {
         FOOD_TRUCK("푸드트럭"),
         PROMOTION("프로모션"),
         TOILET("화장실"),
-        MEDICAL_ROOM("의무실"),
+        HEAT_STATION("온열질환 대비소"),
         SHUTTLE_COCK("셔틀콕"),
         PERFORMANCE_HALL("공연장"),
         SMOKING_AREA("흡연구역"),
