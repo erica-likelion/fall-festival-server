@@ -8,33 +8,38 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.List;
 
+/**
+ * 캐시 설정 클래스
+ */
 @Configuration
 public class CacheConfig {
 
+    /**
+     * 캐시 매니저 빈 설정
+     */
     @Bean
     public CacheManager cacheManager() {
-        var markers = new CaffeineCache(
-                "markers",
+        List<CaffeineCache> caches = Arrays.asList(
+                createCache("markers", Duration.ofHours(1)),
+                createCache("notices", Duration.ofHours(12))
+        );
+
+        SimpleCacheManager cacheManager = new SimpleCacheManager();
+        cacheManager.setCaches(caches);
+        return cacheManager;
+    }
+
+    private CaffeineCache createCache(String name, Duration duration) {
+        return new CaffeineCache(
+                name,
                 Caffeine.newBuilder()
-                        .expireAfterWrite(Duration.ofHours(1))
+                        .expireAfterWrite(duration)
                         .maximumSize(100)
                         .recordStats()
                         .build()
         );
-
-        var notices = new CaffeineCache(
-                "notices",
-                Caffeine.newBuilder()
-                        .expireAfterWrite(Duration.ofHours(12))
-                        .maximumSize(100)
-                        .recordStats()
-                        .build()
-        );
-
-        var mgr = new SimpleCacheManager();
-        mgr.setCaches(List.of(markers, notices));
-        return mgr;
     }
 }

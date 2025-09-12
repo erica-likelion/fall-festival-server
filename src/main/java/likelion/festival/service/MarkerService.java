@@ -18,12 +18,14 @@ import java.util.List;
 public class MarkerService {
 
     private final MarkerRepository markerRepository;
+    private final CacheService cacheService;
 
     /**
      * 전체 마커 목록 조회
      */
     @Cacheable("markers")
     public List<MarkerResponseDto> getAllMarkers() {
+        cacheService.recordUpdate("markers");
         return markerRepository.findAllWithJoins()
                 .stream()
                 .map(MarkerResponseDto::from)

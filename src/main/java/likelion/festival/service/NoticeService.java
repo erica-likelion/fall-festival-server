@@ -18,6 +18,7 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class NoticeService {
     private final NoticeRepository noticeRepository;
+    private final CacheService cacheService;
 
     // 공지사항 전체 불러오기
     @Cacheable("notices")
@@ -28,6 +29,7 @@ public class NoticeService {
             throw new ApiException(ErrorCode.NOTICE_NOT_FOUND);
         }
 
+        cacheService.recordUpdate("notices");
         return notices.stream()
                 .map(NoticeDto::from)
                 .toList();
