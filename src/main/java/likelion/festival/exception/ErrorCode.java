@@ -11,6 +11,9 @@ public enum ErrorCode {
     INVALID_ARGUMENT(HttpStatus.BAD_REQUEST, "E400001", "잘못된 요청 파라미터입니다."),
     VALIDATION_FAILED(HttpStatus.BAD_REQUEST, "E400002", "유효성 검증에 실패했습니다."),
 
+    // 403 Forbidden
+    INVALID_ADMIN_KEY(HttpStatus.FORBIDDEN, "E403001", "유효하지 않은 관리자 키입니다."),
+
     // 404 Not Found
     ENDPOINT_NOT_FOUND(HttpStatus.NOT_FOUND, "E404000", "존재하지 않는 엔드포인트입니다."),
     MENU_NOT_FOUND(HttpStatus.NOT_FOUND, "E404001", "메뉴를 찾을 수 없습니다."),
