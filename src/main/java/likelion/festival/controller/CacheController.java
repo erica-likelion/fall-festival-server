@@ -1,12 +1,12 @@
 package likelion.festival.controller;
 
+import likelion.festival.exception.ApiException;
 import likelion.festival.exception.ApiSuccess;
+import likelion.festival.exception.ErrorCode;
 import likelion.festival.service.CacheService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -19,6 +19,9 @@ import java.util.Map;
 public class CacheController {
 
     private final CacheService cacheService;
+
+    @Value("${admin.key}")
+    private String adminKey;
 
     /**
      * 모든 캐시 상태 조회
@@ -33,7 +36,10 @@ public class CacheController {
      * 모든 캐시 삭제
      */
     @DeleteMapping
-    public ApiSuccess<Map<String, String>> clearAllCache() {
+    public ApiSuccess<Map<String, String>> clearAllCache(@RequestParam(value = "key", required = false) String key) {
+        if (key == null || !key.equals(adminKey)) {
+            throw new ApiException(ErrorCode.INVALID_ADMIN_KEY);
+        }
         Map<String, String> result = cacheService.clearAllCache();
         return ApiSuccess.of(result, "캐시 삭제 완료");
     }
