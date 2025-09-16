@@ -17,6 +17,7 @@ public interface MarkerRepository extends JpaRepository<Marker, Long> {
      * 모든 마커 정보를 연관된 엔티티와 함께 조회
      */
     @Query("SELECT m FROM Marker m " +
+            "LEFT JOIN FETCH m.closedDays " +
             "LEFT JOIN FETCH m.content c " +
             "LEFT JOIN FETCH c.notice " +
             "LEFT JOIN FETCH m.pub " +
