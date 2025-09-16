@@ -37,7 +37,7 @@ public class FortuneService {
         this.clock = clock;
     }
 
-    private static final int FESTIVAL_DAY = 3; // 축제 3일간
+    private static final int FESTIVAL_DAY = 5; // 축제 5일간
     private static final ZoneId KST = ZoneId.of("Asia/Seoul"); // 기준 한국시간으로
 
     @Transactional
